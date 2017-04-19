@@ -16,7 +16,7 @@ Cezerin is an open-source e-commerce platform built with JavaScript only. Cezeri
 * MongoDB
 
 
-## Road Map
+## Roadmap
 
 * ~~**Products**~~
 * ~~**Template**~~
@@ -44,6 +44,14 @@ Cezerin is an open-source e-commerce platform built with JavaScript only. Cezeri
 
 ## Installation
 
+### Requirements
+* NodeJS
+* NPM
+* MongoDB
+
+
+### Installation
+
 ```shell
 git clone https://github.com/cezerin/cezerin.git cezerin
 cd cezerin
@@ -51,7 +59,11 @@ npm install
 npm run build
 node start
 ```
+
 Then open <http://localhost:3000> to see your app.
+
+[Configuration details](https://docs.cezerin.com/configuration.html)
+
 
 |`npm run <script>`|Description|
 |------------------|-----------|
@@ -101,7 +113,9 @@ Then open <http://localhost:3000> to see your app.
 
 ## Documentation
 
-[API Documentation](https://doc.cezerin.com)
+[Documentation](https://docs.cezerin.com)
+
+[API Documentation](https://api.cezerin.com)
 
 
 ## Contributing
