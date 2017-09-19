@@ -1,13 +1,12 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { deleteImage, updateImages, fetchImages, uploadImages } from '../../actions'
+import { deleteImage, updateImages, fetchImages  } from '../../actions'
 import ProductImages from './components/images'
 
 const mapStateToProps = (state, ownProps) => {
   const { productId } = ownProps.match.params;
   return {
     images: state.products.editProductImages,
-    uploadingImages: state.products.uploadingImages,
     productId: productId
   }
 }
@@ -23,10 +22,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchData: () => {
       const { productId } = ownProps.match.params;
       dispatch(fetchImages(productId));
-    },
-    onImageUpload: (form) => {
-      const { productId } = ownProps.match.params;
-      dispatch(uploadImages(productId, form));
     }
   }
 }

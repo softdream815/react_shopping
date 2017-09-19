@@ -48,9 +48,14 @@ const asyncValidate = (values) => {
 }
 
 class ProductCategoryEditForm extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
   render() {
+    const apiToken = api.token;
+
     let {
-      uploadingImage,
       handleSubmit,
       pristine,
       submitting,
@@ -78,8 +83,9 @@ class ProductCategoryEditForm extends React.Component {
               <div className={style.shortBox}>
                 <Field name="enabled" component={CustomToggle} label={messages.enabled} className={style.toggle}/>
                 <ImageUpload
-                  uploading={uploadingImage}
                   imageUrl={imageUrl}
+                  postUrl={`${settings.apiBaseUrl}/product_categories/${categoryId}/image`}
+                  apiToken={apiToken}
                   onDelete={onImageDelete}
                   onUpload={onImageUpload}
                  />

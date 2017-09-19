@@ -79,18 +79,6 @@ function successReplaceCategory(newParentId) {
   }
 }
 
-function imageUploadStart() {
-  return {
-    type: t.CATEGORY_IMAGE_UPLOAD_START
-  }
-}
-
-function imageUploadEnd() {
-  return {
-    type: t.CATEGORY_IMAGE_UPLOAD_END
-  }
-}
-
 export function fetchCategories() {
   return dispatch => {
     dispatch(requestCategories());
@@ -275,22 +263,5 @@ export function replaceCategory(parentId) {
           //dispatch error
           console.log(error)
       });
-  }
-}
-
-export function uploadImage(form) {
-  return (dispatch, getState) => {
-    const state = getState();
-    const categoryId = state.productCategories.selectedId;
-    
-    dispatch(imageUploadStart());
-    return api.productCategories.uploadImage(categoryId, form)
-    .then(() => {
-      dispatch(imageUploadEnd());
-      dispatch(fetchCategories());
-    })
-    .catch(error => {
-      dispatch(imageUploadEnd());
-    });
   }
 }

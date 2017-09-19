@@ -158,18 +158,6 @@ function successCreateProduct(id) {
   }
 }
 
-function imagesUploadStart() {
-  return {
-    type: t.PRODUCT_IMAGES_UPLOAD_START
-  }
-}
-
-function imagesUploadEnd() {
-  return {
-    type: t.PRODUCT_IMAGES_UPLOAD_END
-  }
-}
-
 const getFilter = (state, offset = 0) => {
   let filter = {
     limit: 50,
@@ -479,19 +467,5 @@ export function updateImages(productId, images) {
       dispatch(fetchImages(productId))
     })
     .catch(error => {});
-  }
-}
-
-export function uploadImages(productId, form) {
-  return (dispatch, getState) => {
-    dispatch(imagesUploadStart());
-    return api.products.images.upload(productId, form)
-    .then(() => {
-      dispatch(imagesUploadEnd());
-      dispatch(fetchImages(productId));
-    })
-    .catch(error => {
-      dispatch(imagesUploadEnd());
-    });
   }
 }
