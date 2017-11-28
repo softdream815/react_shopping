@@ -5,7 +5,7 @@ const OrdertTansactionsService = require('../services/orders/orderTransactions')
 const getPaymentFormSettings = (options) => {
   const { gateway, gatewaySettings, order, amount, currency } = options;
   const params = {
-    sandbox: '0',
+    sandbox: '1',
     action: 'pay',
     version: '3',
     amount: amount,
