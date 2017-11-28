@@ -574,18 +574,14 @@ class OrdersService {
         EmailTemplatesService.getEmailTemplate('order_confirmation'),
         SettingsService.getSettings()
       ]).then(([ order, emailTemplate, dashboardSettings ]) => {
-        const bodyTemplate = handlebars.compile(emailTemplate.body);
-        const bodyFromTemplate = bodyTemplate(order);
-
-        const subjectTemplate = handlebars.compile(emailTemplate.subject);
-        const subjectFromTemplate = subjectTemplate(order);
-
+        const handlebarsTemplate = handlebars.compile(emailTemplate.body);
+        const html = handlebarsTemplate(order);
         const copyTo = dashboardSettings.order_confirmation_copy_to;
 
         let message = {
           to: order.email,
-          subject: subjectFromTemplate,
-          html: bodyFromTemplate
+          subject: emailTemplate.subject,
+          html: html
         }
 
         if(copyTo && copyTo.includes('@')){
