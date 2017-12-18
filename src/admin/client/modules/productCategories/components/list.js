@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 import messages from 'lib/text'
+
 import { List, ListItem } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 var styles = {
   item: {
@@ -60,9 +61,10 @@ export default class Categories extends React.Component {
     	onSelect,
     	selectedId,
     	items,
+      onCreate,
     	showAll = false,
       showRoot = false,
-      showManage = false,
+      showAdd = false,
       rootName = messages.productCategories_root,
       allName = messages.productCategories_all,
       opened = false
@@ -96,17 +98,12 @@ export default class Categories extends React.Component {
 
           {rows}
 
-          {showManage &&
-            <Link to="/admin/products/categories" style={{ textDecoration: 'none' }}>
-              <ListItem
-                primaryText={messages.productCategories_titleEditMany}
-                style={styles.item}
-                innerDivStyle={styles.innerItem}
-                leftIcon={<FontIcon className="material-icons">settings</FontIcon>}
-              />
-            </Link>
-          }
         </List>
+        {showAdd &&
+          <FloatingActionButton secondary={false} style={styles.fab} onClick={onCreate}>
+            <FontIcon className="material-icons">add</FontIcon>
+          </FloatingActionButton>
+        }
       </div>
     )
   }

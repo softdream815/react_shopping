@@ -11,12 +11,8 @@ import OrdersHead from 'modules/orders/listHead/index'
 import OrderHead from 'modules/orders/editHead/index'
 import OrderStatusHead from 'modules/orderStatuses/head/index'
 import PaymentMethodHead from 'modules/settings/paymentsEdit/head'
-import PaymentMethodListHead from 'modules/settings/payments/head'
 import ShippingMethodHead from 'modules/settings/shippingEdit/head'
-import ShippingMethodListHead from 'modules/settings/shipping/head'
 import PageHead from 'modules/settings/pages/edit/head'
-import PageListHead from 'modules/settings/pages/list/head'
-import TokenListHead from 'modules/settings/tokens/list/head'
 import AppsHead from 'modules/apps/head'
 import DrawerMenu from './drawer'
 
@@ -73,9 +69,12 @@ export default class AppBarTop extends React.Component {
       rightElements = <OrdersHead />
     }
     else if(pathname === '/admin/orders/statuses'){
-      title = orderStatusName ? messages.editOrderStatus : messages.orderStatuses;
+      title = messages.orderStatuses;
       leftButton = <Link to="/admin/orders"><IconButton><FontIcon color="#fff" className="material-icons">arrow_back</FontIcon></IconButton></Link>
-      rightElements = <OrderStatusHead />
+      if(orderStatusName){
+        title = messages.editOrderStatus;
+        rightElements = <OrderStatusHead />
+      }
     }
     else if(pathname.startsWith('/admin/order/')){
       title = orderNumber ? `${messages.order} #${orderNumber}` : messages.order;
@@ -97,9 +96,12 @@ export default class AppBarTop extends React.Component {
       rightElements = <ProductHead />;
     }
     else if(pathname === '/admin/products/categories'){
-      title = productCategoryName ? messages.productCategories_titleEdit : messages.productCategories_title;
+      title = messages.productCategories_title;
       leftButton = <Link to="/admin/products"><IconButton><FontIcon color="#fff" className="material-icons">arrow_back</FontIcon></IconButton></Link>
-      rightElements = <ProductCategoryHead />
+      if(productCategoryName){
+        title = messages.productCategories_titleEdit;;
+        rightElements = <ProductCategoryHead />
+      }
     }
     else if(pathname === '/admin/customers'){
       title = messages.customers_title;
@@ -115,9 +117,12 @@ export default class AppBarTop extends React.Component {
       rightElements = <CustomersHead />
     }
     else if(pathname === '/admin/customers/groups'){
-      title = customerGroupName ? messages.customerGroups_titleEdit : messages.customerGroups_title;
+      title = messages.customerGroups_title;
       leftButton = <Link to="/admin/customers"><IconButton><FontIcon color="#fff" className="material-icons">arrow_back</FontIcon></IconButton></Link>
-      rightElements = <CustomerGroupHead />
+      if(customerGroupName){
+        title = messages.customerGroups_titleEdit;;
+        rightElements = <CustomerGroupHead />
+      }
     }
     else if(pathname === '/admin/settings/email'){
       title = messages.settings_emailSettings;
@@ -166,11 +171,9 @@ export default class AppBarTop extends React.Component {
     }
     else if(pathname === '/admin/settings/shipping'){
       title = messages.settings_shippingMethods;
-      rightElements = <ShippingMethodListHead />
     }
     else if(pathname === '/admin/settings/payments'){
       title = messages.settings_paymentsMethods;
-      rightElements = <PaymentMethodListHead />
     }
     else if(pathname === '/admin/settings/shipping/add'){
       title = messages.settings_addShippingMethod;
@@ -199,7 +202,6 @@ export default class AppBarTop extends React.Component {
     }
     else if(pathname === '/admin/settings/pages'){
       title = messages.settings_pages;
-      rightElements = <PageListHead />
     }
     else if(pathname === '/admin/settings/pages/add'){
       title = messages.settings_addPage;
@@ -212,7 +214,6 @@ export default class AppBarTop extends React.Component {
     }
     else if(pathname === '/admin/settings/tokens'){
       title = messages.settings_tokens;
-      rightElements = <TokenListHead />
     }
     else if(pathname === '/admin/settings/tokens/add'){
       title = messages.settings_addToken;

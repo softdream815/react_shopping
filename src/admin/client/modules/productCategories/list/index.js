@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { selectCategory, fetchCategoriesIfNeeded } from '../actions'
+import { selectCategory, fetchCategoriesIfNeeded, createCategory } from '../actions'
 import { fetchProducts } from '../../products/actions'
 import List from '../components/list'
 

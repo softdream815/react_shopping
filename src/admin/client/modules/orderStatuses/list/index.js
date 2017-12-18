@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { selectStatus, fetchStatusesIfNeeded } from '../actions'
+import { selectStatus, fetchStatusesIfNeeded, deselectStatus } from '../actions'
 import { fetchOrders } from '../../orders/actions'
 import List from '../components/list'
 
@@ -18,6 +18,9 @@ const mapDispatchToProps = (dispatch) => {
     onSelect: (statusId) => {
       dispatch(selectStatus(statusId));
       dispatch(fetchOrders());
+    },
+    onCreate: () => {
+      dispatch(deselectStatus())
     }
   }
 }
