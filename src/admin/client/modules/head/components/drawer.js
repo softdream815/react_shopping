@@ -27,15 +27,17 @@ const menuItems = [
     title: messages.drawer_customers,
     url: '/admin/customers',
     icon: 'person'
-  }, {
-    title: messages.settings_pages,
-    url: '/admin/pages',
-    icon: 'description'
-  }, {
-    title: messages.files,
-    url: '/admin/files',
-    icon: 'folder'
-  }, {
+  },
+  // {
+  //   title: messages.drawer_discounts,
+  //   url: '/admin/discounts',
+  //   icon: 'content_cut'
+  // },{
+  //   title: messages.drawer_reports,
+  //   url: '/admin/reports',
+  //   icon: 'timeline'
+  // },
+  {
     title: '-',
     url: 'settings'
   }, {
@@ -44,7 +46,7 @@ const menuItems = [
     icon: 'settings'
   }, {
     title: messages.apps,
-    url: '/admin/apps',
+    url: '/admin/webstore',
     icon: 'apps'
   }, {
     title: messages.drawer_logout,

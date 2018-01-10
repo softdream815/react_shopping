@@ -45,7 +45,7 @@ const OrdersListItem = ({ order, onSelect, selected, settings }) => {
 
   const stateIcons = getOrderStateIcons(order);
   const dateCreated = moment(order.date_placed || order.date_created);
-  const dateCreatedFromNow = dateCreated.format(`${settings.date_format}`);
+  const dateCreatedFromNow = dateCreated.fromNow();
   let shippingTo = order.shipping_address ? order.shipping_address.full_name : '';
 
   return (

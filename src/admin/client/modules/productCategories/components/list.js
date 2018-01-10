@@ -1,52 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 import messages from 'lib/text'
+
 import { List, ListItem } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 
-const styles = {
+var styles = {
+  item: {
+    fontSize: 14,
+    lineHeight: '14px'
+  },
   selectedItem: {
+    fontSize: 14,
+    lineHeight: '14px',
     backgroundColor: 'rgba(0, 0, 0, 0.1)'
   },
   innerItem: {
     paddingLeft: 55
   },
-  nestedListStyle: {
-    padding: '0 0 0 15px'
-  }
-}
-
-const FolderIcon = <FontIcon className="material-icons">folder</FontIcon>;
-const DraftIcon = <FontIcon className="material-icons">visibility_off</FontIcon>;
-
-class Item extends React.PureComponent {
-  constructor(props){
-    super(props);
-  }
-
-  handleClick = () => {
-    const { item } = this.props;
-    this.props.onSelect(item.id);
-  }
-
-  render() {
-    const { item, opened, selectedId, nestedItems } = this.props;
-    const icon = item.enabled ? FolderIcon : DraftIcon;
-    const style = item.id === selectedId ? styles.selectedItem : null;
-
-    return (
-      <ListItem
-        className="treeItem"
-        initiallyOpen={opened}
-        style={style}
-        innerDivStyle={styles.innerItem}
-        primaryText={item.name}
-        nestedItems={nestedItems}
-        leftIcon={icon}
-        onClick={this.handleClick}
-        nestedListStyle={styles.nestedListStyle}
-       />
-    )
+  fab: {
+    position: 'fixed',
+    left: '18%',
+    bottom: '15px',
+    zIndex: 1
   }
 }
 
@@ -60,17 +36,16 @@ export default class Categories extends React.Component {
   }
 
   getItem(selectedId, allItems, item, opened) {
-    const nestedItems = this.getChildren(selectedId, allItems, item.id, opened);
-    return (
-      <Item
-        key={item.id}
-        item={item}
-        opened={opened}
-        selectedId={selectedId}
-        nestedItems={nestedItems}
-        onSelect={this.props.onSelect}
-      />
-    )
+    return <ListItem
+      key={item.id}
+      initiallyOpen={opened}
+      style={item.id === selectedId ? styles.selectedItem : styles.item}
+      innerDivStyle={styles.innerItem}
+      primaryText={item.name}
+      nestedItems={this.getChildren(selectedId, allItems, item.id, opened)}
+      leftIcon={<FontIcon className="material-icons">{item.enabled ? 'folder' : 'visibility_off'}</FontIcon>}
+      onClick={() => { this.props.onSelect(item.id) }}
+     />
   }
 
   getChildren(selectedId, allItems, id, opened){
@@ -81,64 +56,55 @@ export default class Categories extends React.Component {
     }
   }
 
-  handleClickAll = () => {
-    this.props.onSelect('all');
-  }
-
-  handleClickRoot = () => {
-    this.props.onSelect('root');
-  }
-
   render(){
     const {
+    	onSelect,
     	selectedId,
     	items,
+      onCreate,
     	showAll = false,
       showRoot = false,
-      showManage = false,
+      showAdd = false,
       rootName = messages.productCategories_root,
       allName = messages.productCategories_all,
       opened = false
     } = this.props;
 
+
     var rows = items.filter(item => item.parent_id === null).map(item => this.getItem(selectedId, items, item, opened));
 
     return (
-      <List>
-        {showRoot &&
-          <ListItem
-            primaryText={rootName}
-            style={'root' === selectedId ? styles.selectedItem : null}
-            innerDivStyle={styles.innerItem}
-            leftIcon={<FontIcon className="material-icons">home</FontIcon>}
-            onClick={this.handleClickRoot}
-          />
-        }
-
-        {showAll &&
-          <ListItem
-            className="treeItem"
-            primaryText={allName}
-            style={'all' === selectedId ? styles.selectedItem : null}
-            innerDivStyle={styles.innerItem}
-            leftIcon={<FontIcon className="material-icons">folder</FontIcon>}
-            onClick={this.handleClickAll}
-          />
-        }
-
-        {rows}
-
-        {showManage &&
-          <Link to="/admin/products/categories" style={{ textDecoration: 'none' }}>
+      <div>
+        <List>
+          {showRoot &&
             <ListItem
-              className="treeItem"
-              primaryText={messages.productCategories_titleEditMany}
+              primaryText={rootName}
+              style={'root' === selectedId ? styles.selectedItem : styles.item}
               innerDivStyle={styles.innerItem}
-              leftIcon={<FontIcon className="material-icons">settings</FontIcon>}
+              leftIcon={<FontIcon className="material-icons">home</FontIcon>}
+              onClick={() => { onSelect('root') }}
             />
-          </Link>
+          }
+
+          {showAll &&
+            <ListItem
+              primaryText={allName}
+              style={'all' === selectedId ? styles.selectedItem : styles.item}
+              innerDivStyle={styles.innerItem}
+              leftIcon={<FontIcon className="material-icons">folder</FontIcon>}
+              onClick={() => { onSelect('all') }}
+            />
+          }
+
+          {rows}
+
+        </List>
+        {showAdd &&
+          <FloatingActionButton secondary={false} style={styles.fab} onClick={onCreate}>
+            <FontIcon className="material-icons">add</FontIcon>
+          </FloatingActionButton>
         }
-      </List>
+      </div>
     )
   }
 }

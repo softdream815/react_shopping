@@ -56,7 +56,6 @@ class ProductsService {
             let items = itemsResult.map(item => this.changeProperties(categories, item, domain));
             items = this.sortItemsByArrayOfIdsIfNeed(items, ids, sortQuery);
             items = this.sortItemsByArrayOfSkuIfNeed(items, sku, sortQuery);
-            items = items.filter(item => !!item);
 
             let total_count = 0;
             let min_price = 0;
@@ -92,13 +91,13 @@ class ProductsService {
   }
 
   sortItemsByArrayOfIdsIfNeed(items, arrayOfIds, sortQuery) {
-    return arrayOfIds && arrayOfIds.length > 0 && sortQuery === null && items && items.length > 0
+    return arrayOfIds && arrayOfIds.length > 0 && sortQuery === null
       ? arrayOfIds.map(id => items.find(item => item.id === id))
       : items;
   }
 
   sortItemsByArrayOfSkuIfNeed(items, arrayOfSku, sortQuery) {
-    return arrayOfSku && arrayOfSku.length > 0 && sortQuery === null && items && items.length > 0
+    return arrayOfSku && arrayOfSku.length > 0 && sortQuery === null
       ? arrayOfSku.map(sku => items.find(item => item.sku === sku))
       : items;
   }
@@ -393,8 +392,7 @@ class ProductsService {
       price_from,
       price_to,
       sku,
-      ids,
-      tags
+      ids
     } = params;
 
      // parse values
@@ -405,7 +403,6 @@ class ProductsService {
      price_from = parse.getNumberIfPositive(price_from);
      price_to = parse.getNumberIfPositive(price_to);
      ids = parse.getString(ids);
-     tags = parse.getString(tags);
 
      let queries = [];
      const currentDate = new Date();
@@ -482,12 +479,6 @@ class ProductsService {
            sku: sku
          });
        }
-     }
-
-     if (tags && tags.length > 0) {
-       queries.push({
-         tags: tags
-       });
      }
 
      if(useAttributes){

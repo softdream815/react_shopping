@@ -1,15 +1,10 @@
 import React from 'react'
 import { themeSettings, text } from '../lib/settings'
 import MetaTags from '../components/metaTags'
-import PageList from '../components/pageList'
 const Fragment = React.Fragment;
 
 const PageContainer = (props) => {
-  const {pageDetails, currentPage} = props.state;
-  const pageListTag = themeSettings.page_list_tag;
-  const pageListTagDefined = pageListTag && pageListTag.length > 0;
-  const pageListPath = pageListTagDefined ? ('/' + pageListTag) : null;
-  const showPageList = pageListTagDefined && (pageDetails.path === pageListPath);
+  const {pageDetails} = props.state;
 
   return (
     <Fragment>
@@ -25,12 +20,9 @@ const PageContainer = (props) => {
       <section className="section">
         <div className="container">
           <div className="content">
-            <div className="page-content" dangerouslySetInnerHTML={{
+            <div dangerouslySetInnerHTML={{
               __html: pageDetails.content
             }}/>
-            {showPageList &&
-              <PageList tags={pageListTag} sort="-date_created" />
-            }
           </div>
         </div>
       </section>

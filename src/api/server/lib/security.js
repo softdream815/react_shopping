@@ -1,7 +1,4 @@
-const settings = require('./settings');
 const jwt = require('jsonwebtoken');
-
-const DEVELOPER_MODE = settings.developerMode === true;
 
 const verifyToken = (jwtToken, secretKey) => {
   return new Promise((resolve, reject) => {
@@ -42,9 +39,7 @@ const scope = {
 }
 
 const checkUserScope = (requiredScope, req, res, next) => {
-  if(DEVELOPER_MODE === true){
-    next();
-  } else if (req.user && req.user.scopes && req.user.scopes.length > 0 && (req.user.scopes.includes(scope.ADMIN) || req.user.scopes.includes(requiredScope))) {
+  if (req.user && req.user.scopes && req.user.scopes.length > 0 && (req.user.scopes.includes(scope.ADMIN) || req.user.scopes.includes(requiredScope))) {
     next();
   } else {
     res.status(403).send({'error': true, 'message': 'Forbidden'});
@@ -54,6 +49,5 @@ const checkUserScope = (requiredScope, req, res, next) => {
 module.exports = {
   checkUserScope: checkUserScope,
   scope: scope,
-  verifyToken: verifyToken,
-  DEVELOPER_MODE: DEVELOPER_MODE
+  verifyToken: verifyToken
 }

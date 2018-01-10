@@ -154,5 +154,7 @@ const isGtagInstalled = () => {
 const logEvent = ({ eventName, eventParameters }) => {
   if(isGtagInstalled()){
     gtag('event', eventName, eventParameters);
+    console.log(eventName);
+    console.log(eventParameters);
   }
 }

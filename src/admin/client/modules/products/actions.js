@@ -171,15 +171,12 @@ function imagesUploadEnd() {
 }
 
 const getFilter = (state, offset = 0) => {
-  const searchTerm = state.products.filter.search;
-  const sortOrder = searchTerm && searchTerm.length > 0 ? 'search' : 'name';
-
   let filter = {
     limit: 50,
     fields: 'id,name,category_id,category_name,sku,images,enabled,discontinued,stock_status,stock_quantity,price,on_sale,regular_price,url',
-    search: searchTerm,
+    search: state.products.filter.search,
     offset: offset,
-    sort: sortOrder
+    sort: 'name'
   }
 
   if(state.productCategories.selectedId !== null && state.productCategories.selectedId !== 'all') {

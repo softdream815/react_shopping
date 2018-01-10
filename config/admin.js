@@ -2,6 +2,5 @@
 module.exports = {
   // dashboard UI language
   language: 'en',
-  apiBaseUrl: '/api/v1',
-  developerMode: true
+  apiBaseUrl: '/api/v1'
 }

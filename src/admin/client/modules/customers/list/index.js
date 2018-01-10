@@ -33,7 +33,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     loadMore: () => {
       dispatch(fetchMoreCustomers());
-    }
+    },
+    // onCreate: () => {
+    //   dispatch(createProduct())
+    // }
   }
 }
 

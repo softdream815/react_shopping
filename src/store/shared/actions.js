@@ -53,8 +53,7 @@ export const getProductFilterForSearch = (locationSearch) => {
     categoryId: null,
     priceFrom: parseInt(queryFilter.price_from || 0),
     priceTo: parseInt(queryFilter.price_to || 0),
-    search: queryFilter.search,
-    sort: 'search'
+    search: queryFilter.search
   }
 }
 

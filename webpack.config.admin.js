@@ -14,11 +14,11 @@ module.exports = () => {
       vendor: [
         'react',
         'react-dom',
+        'redux',
         'react-redux',
         'redux-thunk',
-        'react-router-dom',
+        'react-router',
         'react-dropzone',
-        'redux',
         'redux-form',
         'redux-form-material-ui',
         'material-ui'
