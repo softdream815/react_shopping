@@ -19,7 +19,7 @@ import Tags from './tags'
 const Fragment = React.Fragment;
 
 const Description = ({ description }) => (
-  <div dangerouslySetInnerHTML={{__html: description}}/>
+  <div className="product-content" dangerouslySetInnerHTML={{__html: description}}/>
 )
 
 export default class ProductDetails extends React.Component {
@@ -97,7 +97,9 @@ export default class ProductDetails extends React.Component {
   render() {
     const {product, settings, categories} = this.props;
     const {selectedVariant, isAllOptionsSelected} = this.state;
-    const maxQuantity = selectedVariant ? selectedVariant.stock_quantity : product.stock_quantity;
+    const maxQuantity = product.stock_backorder ?
+      themeSettings.maxCartItemQty :
+      (selectedVariant ? selectedVariant.stock_quantity : product.stock_quantity);
 
     if(product){
       return (

@@ -1,6 +1,7 @@
 import api from './api'
 import queryString from 'query-string'
 import {getParsedProductFilter, getProductFilterForCategory, getProductFilterForSearch} from '../shared/actions'
+import * as themeLocales from './themeLocales'
 import {PAGE, PRODUCT_CATEGORY, PRODUCT, RESERVED, SEARCH} from '../shared/pageTypes'
 
 const PRODUCT_FIELDS = 'path,id,name,category_id,category_name,sku,images,enabled,discontinued,stock_status,stock_quantity,price,on_sale,regular_price,attributes,tags,position';
@@ -179,14 +180,18 @@ const getFilter = (currentPage, urlQuery, settings) => {
     productFilter = getProductFilterForSearch(urlQuery);
   }
 
-  productFilter['sort'] = settings.default_product_sorting;
+  const sortingNotSet = productFilter['sort'] === undefined || productFilter['sort'] === null;
+  if(sortingNotSet){
+    productFilter['sort'] = settings.default_product_sorting;
+  }
+
   productFilter.fields = settings.product_fields && settings.product_fields !== '' ? settings.product_fields : PRODUCT_FIELDS;
   productFilter.limit = settings.products_limit && settings.products_limit !== 0 ? settings.products_limit : 30;
 
   return productFilter;
 }
 
-export const loadState = (req) => {
+export const loadState = (req, language) => {
   const cookie = req.get('cookie');
   const urlPath = req.path;
   const urlQuery = req.url.includes('?') ? req.url.substring(req.url.indexOf('?')) : '';
@@ -199,12 +204,21 @@ export const loadState = (req) => {
 
   return Promise.all([
     getCurrentPage(req.path),
-    api.settings.retrieve().then(({status, json}) => json)
+    api.settings.retrieve().then(({status, json}) => json),
+    themeLocales.getText(language),
+    api.theme.placeholders.list()
   ])
-  .then(([currentPage, settings]) => {
+  .then(([currentPage, settings, themeText, placeholdersResponse]) => {
     const productFilter = getFilter(currentPage, urlQuery, settings);
 
     return getAllData(currentPage, productFilter, cookie)
-    .then(allData => getState(currentPage, settings, allData, location, productFilter));
+    .then(allData => {
+      const state = getState(currentPage, settings, allData, location, productFilter);
+      return {
+        state: state,
+        themeText: themeText,
+        placeholders: placeholdersResponse.json
+      }
+    });
   })
 }
