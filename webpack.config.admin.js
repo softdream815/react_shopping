@@ -21,11 +21,7 @@ module.exports = {
       'material-ui'
     ]
   },
-  
-  performance: {
-    hints: false
-  },
-  
+
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, 'public'),
