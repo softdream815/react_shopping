@@ -16,38 +16,37 @@ class ProductImagesService {
 		return { error: true, message: err.toString() };
 	}
 
-	async getImages(productId) {
+	getImages(productId) {
 		if (!ObjectID.isValid(productId)) {
 			return Promise.reject('Invalid identifier');
 		}
 		let productObjectID = new ObjectID(productId);
 
-		let domain =
-			settings.assetsBaseURL || (await SettingsService.getSettings()).domain;
-		console.log(domain);
+		return SettingsService.getSettings().then(generalSettings =>
+			db
+				.collection('products')
+				.findOne({ _id: productObjectID }, { fields: { images: 1 } })
+				.then(product => {
+					if (product && product.images && product.images.length > 0) {
+						let images = product.images.map(image => {
+							image.url = url.resolve(
+								generalSettings.domain,
+								settings.productsUploadUrl +
+									'/' +
+									product._id +
+									'/' +
+									image.filename
+							);
+							return image;
+						});
 
-		db.collection('products')
-			.findOne({ _id: productObjectID }, { fields: { images: 1 } })
-			.then(product => {
-				if (product && product.images && product.images.length > 0) {
-					let images = product.images.map(image => {
-						image.url = url.resolve(
-							domain,
-							settings.productsUploadUrl +
-								'/' +
-								product._id +
-								'/' +
-								image.filename
-						);
-						return image;
-					});
-
-					images = images.sort((a, b) => a.position - b.position);
-					return images;
-				} else {
-					return [];
-				}
-			});
+						images = images.sort((a, b) => a.position - b.position);
+						return images;
+					} else {
+						return [];
+					}
+				})
+		);
 	}
 
 	deleteImage(productId, imageId) {

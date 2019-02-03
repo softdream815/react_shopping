@@ -21,14 +21,11 @@ module.exports = {
 	storeBaseUrl: `http://localhost:3000`,
 
 	// used by API
-	adminBaseURL: process.env.ADMIN_BASE_URL || 'http://localhost:3003',
+	adminBaseURL: process.env.ADMIN_BASE_URL || 'http://localhost',
 	adminLoginPath: process.env.ADMIN_LOGIN_PATH || '/admin/login',
 
-	// used by API to service assets
-	assetsBaseURL: process.env.ASSETS_BASE_URL || '',
-
 	apiListenPort: 3001,
-	storeListenPort: process.env.STORE_PORT || 3000,
+	storeListenPort: 3000,
 
 	// used by API
 	mongodbServerUrl: dbUrl,
