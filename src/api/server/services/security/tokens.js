@@ -230,8 +230,8 @@ class SecurityTokensService {
 				if (token) {
 					return this.getSignedToken(token).then(signedToken => {
 						const loginUrl = url.resolve(
-							settings.adminBaseURL,
-							settings.adminLoginPath
+							generalSettings.domain,
+							settings.adminLoginUrl
 						);
 						return `${loginUrl}?token=${signedToken}`;
 					});

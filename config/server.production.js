@@ -20,12 +20,8 @@ module.exports = {
 	// Access-Control-Allow-Origin
 	storeBaseUrl: '*',
 
-	// used by API to service assets
-	assetsBaseURL: process.env.ASSETS_BASE_URL || '',
-
 	// used by API
-	adminBaseURL: process.env.ADMIN_BASE_URL || 'http://localhost',
-	adminLoginPath: process.env.ADMIN_LOGIN_PATH || '/admin/login',
+	adminLoginUrl: '/admin/login',
 
 	apiListenPort: 3001,
 	storeListenPort: 3000,
