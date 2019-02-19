@@ -47,6 +47,15 @@ server {
                 proxy_cache_valid 200 30d;
         }
 
+        location /admin {
+                alias /var/www/cezerin/public/admin/;
+		            try_files /index.html /index.html;
+        }
+
+        location /admin-assets/ {
+                alias /var/www/cezerin/public/admin-assets/;
+        }
+
         location /assets/ {
                 alias /var/www/cezerin/theme/assets/;
         }
@@ -55,7 +64,7 @@ server {
                 root /var/www/cezerin/theme/assets/;
         }
 
-        location ~ ^/(api|ajax|ws|images)/ {
+        location ~ ^/(api|ajax|ws)/ {
                 # Proxy to NodeJS
                 expires off;
                 proxy_pass       http://127.0.0.1:3001;
