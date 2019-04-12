@@ -12,39 +12,41 @@ const dbUrl =
 
 module.exports = {
 	// used by Store (server side)
-	apiBaseUrl: process.env.API_BASE_URL || `http://localhost:3001/api/v1`,
+	apiBaseUrl: `http://localhost:3001/api/v1`,
+
+	// used by Store (server and client side)
+	ajaxBaseUrl: `http://localhost:3001/ajax`,
 
 	// Access-Control-Allow-Origin
-	storeBaseUrl: process.env.STORE_BASE_URL || `http://localhost:3000`,
-
-	// used by API
-	adminBaseURL: process.env.ADMIN_BASE_URL || 'http://localhost:3002',
-	adminLoginPath: process.env.ADMIN_LOGIN_PATH || '/login',
+	storeBaseUrl: '*',
 
 	// used by API to service assets
-	assetsBaseURL: process.env.ASSETS_BASE_URL || 'http://localhost:3001',
+	assetsBaseURL: process.env.ASSETS_BASE_URL || '',
 
-	apiListenPort: process.env.API_PORT || 3001,
+	// used by API
+	adminBaseURL: process.env.ADMIN_BASE_URL || 'http://localhost',
+	adminLoginPath: process.env.ADMIN_LOGIN_PATH || '/admin/login',
+
+	apiListenPort: 3001,
+	storeListenPort: 3000,
 
 	// used by API
 	mongodbServerUrl: dbUrl,
-
-	// smpt server parameters
 	smtpServer: {
-		host: process.env.SMTP_HOST || '',
-		port: process.env.SMTP_PORT || 587,
-		secure: process.env.SMTP_SECURE || false,
-		user: process.env.SMTP_USER || '',
-		pass: process.env.SMTP_PASS || '',
-		fromName: process.env.SMTP_FROM_NAME || '',
-		fromAddress: process.env.SMTP_FROM_ADDRESS || ''
+		host: '',
+		port: 0,
+		secure: true,
+		user: '',
+		pass: '',
+		fromName: '',
+		fromAddress: ''
 	},
 
 	// key to sign tokens
-	jwtSecretKey: process.env.JWT_SECRET_KEY || '-',
+	jwtSecretKey: 'SP69kXFR3znRi7kL8Max2GTB24wOtEQj',
 
 	// key to sign store cookies
-	cookieSecretKey: process.env.COOKIE_SECRET_KEY || '-',
+	cookieSecretKey: '8669X9P5yI1DAEthy1chc3M9EncyS7SM',
 
 	// path to uploads
 	categoriesUploadPath: 'public/content/images/categories',
@@ -59,17 +61,12 @@ module.exports = {
 	themeAssetsUploadUrl: '/assets/images',
 
 	// store UI language
-	language: process.env.LANGUAGE || 'en',
-
-	// used by API
-	orderStartNumber: 1000,
+	language: 'en',
 
 	// cost factor, controls how much time is needed to calculate a single BCrypt hash
 	// for production: recommended salRounds > 12
-	saltRounds: process.env.SALT_ROUNDS || 12,
+	saltRounds: 12,
 
 	// used by API
-	orderStartNumber: 1000,
-
-	developerMode: false
+	orderStartNumber: 1000
 };
